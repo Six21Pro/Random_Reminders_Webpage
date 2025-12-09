@@ -21,10 +21,13 @@
         setTimeout(() => {
           alert("⏰ Time for your random reminder!");
         }, delay);
-        document.getElementById('status').innerText = `Reminder set for ${reminderTime.toLocaleTimeString()}`;
-      } else {
+        
+        document.getElementById('status').innerText = `Reminder set for ${reminderTime.toLocaleString()}`;
+
+        <!--document.getElementById('status').innerText = `Reminder set for ${reminderTime.toLocaleTimeString()}`;-->
+      } <!--else {
         document.getElementById('status').innerText = "Time already passed. Try again.";
-      }
+      }-->
     }
   </script>
 </head>
