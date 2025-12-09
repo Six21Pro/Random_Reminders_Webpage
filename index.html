@@ -12,7 +12,10 @@
       const randomMinute = Math.floor(Math.random() * 60);
       const randomSecond = Math.floor(Math.random() * 60);
       const now = new Date();
+      localStorage.setItem("reminder1", "Drink water at 2:30 PM");
       const reminderTime = new Date();
+      const note = localStorage.getItem("reminder1");
+      document.getElementById("savedReminder").innerText = note;
       reminderTime.setHours(randomHour);
       reminderTime.setMinutes(randomMinute);
       reminderTime.setSeconds(randomSecond);
