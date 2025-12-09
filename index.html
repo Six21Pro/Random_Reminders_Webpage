@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Random Reminder App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    function scheduleReminder() {
+      const startHour = parseInt(document.getElementById('startHour').value);
+      const endHour = parseInt(document.getElementById('endHour').value);
+      const randomHour = Math.floor(Math.random() * (endHour - startHour + 1)) + startHour;
+      const randomMinute = Math.floor(Math.random() * 60);
+      const now = new Date();
+      const reminderTime = new Date();
+      reminderTime.setHours(randomHour);
+      reminderTime.setMinutes(randomMinute);
+      reminderTime.setSeconds(0);
+
+      const delay = reminderTime - now;
+      if (delay > 0) {
+        setTimeout(() => {
+          alert("⏰ Time for your random reminder!");
+        }, delay);
+        document.getElementById('status').innerText = `Reminder set for ${reminderTime.toLocaleTimeString()}`;
+      } else {
+        document.getElementById('status').innerText = "Time already passed. Try again.";
+      }
+    }
+  </script>
+</head>
+<body>
+  <h1>Random Reminder App</h1>
+  <label>Start Hour (0–23): <input type="number" id="startHour" value="9"></label><br>
+  <label>End Hour (0–23): <input type="number" id="endHour" value="17"></label><br>
+  <button onclick="scheduleReminder()">Set Random Reminder</button>
+  <p id="status"></p>
+</body>
+</html>
