@@ -5,9 +5,19 @@
   <title>Random Reminder App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
+
+window.onload = function() {
+  const stay = localStorage.getItem("reminder2");
+  if (stay) {
+    document.getElementById("savedReminder2").innerText = `Saved reminder time: ${stay}`;
+  }
+};
+
     function scheduleReminder() {
       const startHour = parseInt(document.getElementById('startHour').value);
       const endHour = parseInt(document.getElementById('endHour').value);
+      const startMonth = parseInt(document.getElementById('startMonth').value);
+      const endMonth = parseInt(document.getElementById('endMonth').value);
       const randomHour = Math.floor(Math.random() * (endHour - startHour + 1)) + startHour;
       const randomMinute = Math.floor(Math.random() * 60);
       const randomSecond = Math.floor(Math.random() * 60);
@@ -20,6 +30,10 @@
       reminderTime.setMinutes(randomMinute);
       reminderTime.setSeconds(randomSecond);
       //reminderTime.setSeconds(0);
+
+      localStorage.setItem("reminder2", `${reminderTime.toLocaleString()}`);
+      const stay = localStorage.getItem("reminder2")
+      document.getElementById("savedReminder2").innerText = stay;
 
       const delay = reminderTime - now;
       if (delay > 0) {
@@ -38,10 +52,20 @@
 </head>
 <body>
   <h1>Random Reminder App</h1>
+  <p id="savedReminder2"></p>
   <label>Start Hour (0–23): <input type="number" id="startHour" value="9"></label><br>
   <label>End Hour (0–23): <input type="number" id="endHour" value="17"></label><br>
+
+  <label>Start Month (0–11): <input type="number" id="startMonth" value="1"></label><br>
+  <label>End Month (0–11): <input type="number" id="endMonth" value="12"></label><br>
+
   <button onclick="scheduleReminder()">Set Random Reminder</button>
   <p id="status"></p>
   <p id="savedReminder"></p>
+
+  <h2>Unsure Yet</h2>
+  <p>This link will likely be leading you back to here. (It goes to my website, hosted on github)<a href="https://six21pro.github.io/gittpageremind/">Check Me!</a></p>
+  
+  
 </body>
 </html>
