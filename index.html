@@ -21,6 +21,8 @@ window.onload = function() {
       const randomHour = Math.floor(Math.random() * (endHour - startHour + 1)) + startHour;
       const randomMinute = Math.floor(Math.random() * 60);
       const randomSecond = Math.floor(Math.random() * 60);
+      const randomMonth = Math.floor(Math.random() * 13);
+      const randomDay = Math.floor(Math.random() * 32);
       const now = new Date();
       localStorage.setItem("reminder1", "Drink water at 2:30 PM");
       const reminderTime = new Date();
@@ -29,11 +31,21 @@ window.onload = function() {
       reminderTime.setHours(randomHour);
       reminderTime.setMinutes(randomMinute);
       reminderTime.setSeconds(randomSecond);
+
+      if (randomMonth === 0 ){
+
+         randomMonth= randomMonth+1
+      };
+      //reminderTime.setMonth(randomMonth-1);
+      reminderTime.setDate(randomDay);
       //reminderTime.setSeconds(0);
 
       localStorage.setItem("reminder2", `${reminderTime.toLocaleString()}`);
-      const stay = localStorage.getItem("reminder2")
+      const stay = localStorage.getItem("reminder2");
       document.getElementById("savedReminder2").innerText = stay;
+
+      document.getElementById('rMonth').innerText = `${randomMonth.toLocaleString()}`;
+      document.getElementById('rDay').innerText = `${randomDay.toLocaleString()}`;
 
       const delay = reminderTime - now;
       if (delay > 0) {
@@ -41,16 +53,41 @@ window.onload = function() {
           alert("⏰ Time for your random reminder!");
         }, delay);
         
-        document.getElementById('status').innerText = `Reminder set for ${reminderTime.toLocaleString()}`;
+
+        
+        document.getElementById('status').innerText = `Reminder set for ${reminderTime.toLocaleTimeString()}`;
 
         //document.getElementById('status').innerText = `Reminder set for ${reminderTime.toLocaleTimeString()}`;
       } //else {
         //document.getElementById('status').innerText = "Time already passed. Try again.";
       //}
     }
+
+
+function scheduleRandomReminder() {
+      const randomMonth = Math.floor(Math.random() * 13);
+      const randomDay = Math.floor(Math.random() * 32);
+      const startHour = parseInt(document.getElementById('startHour').value);
+      const endHour = parseInt(document.getElementById('endHour').value);
+      const randomHour = Math.floor(Math.random() * (endHour - startHour + 1)) + startHour;
+      const randomMinute = Math.floor(Math.random() * 60);
+      const randomSecond = Math.floor(Math.random() * 60);
+
+const rReminderTime = new Date();
+      
+rReminderTime.setMonth(randomMonth);
+      rReminderTime.setDate(randomDay);
+      rReminderTime.setHours(randomHour);
+      rReminderTime.setMinutes(randomMinute);
+      rReminderTime.setSeconds(randomSecond);
+
+
+document.getElementById('randomDateTime').innerText = `Reminder set for ${rReminderTime.toLocaleString()}`;
+      
+    }
   </script>
 </head>
-<body>
+<body style="background-color: lightgreen;">
   <h1>Random Reminder App</h1>
   <p id="savedReminder2"></p>
   <label>Start Hour (0–23): <input type="number" id="startHour" value="9"></label><br>
@@ -59,12 +96,15 @@ window.onload = function() {
   <label>Start Month (0–11): <input type="number" id="startMonth" value="1"></label><br>
   <label>End Month (0–11): <input type="number" id="endMonth" value="12"></label><br>
 
-  <button onclick="scheduleReminder()">Set Random Reminder</button>
+  <button onclick="scheduleReminder()">Set Scheduled Reminder</button>
+<button onclick="scheduleRandomReminder()">Set Random Reminder</button>
   <p id="status"></p>
   <p id="savedReminder"></p>
 
   <h2>Unsure Yet</h2>
   <p>This link will likely be leading you back to here. (It goes to my website, hosted on github)<a href="https://six21pro.github.io/gittpageremind/">Check Me!</a></p>
+  <p>This is random Month: <span id="rMonth">December</span> and this is random day: <span id="rDay">1st</span></p>
+<p id="randomDateTime"></p>
   
   
 </body>
