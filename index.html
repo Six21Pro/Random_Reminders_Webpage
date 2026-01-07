@@ -1,9 +1,71 @@
 
 <!DOCTYPE html>
 <html>
+
+
 <head>
   <title>Random Reminder App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ✅ Add this style block -->
+  <style>
+    .layout {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+    .left {
+      flex: 1 1 auto;
+      min-width: 300px;
+    }
+    .right {
+      flex: 0 0 320px;
+      background: #f9fff1;
+      border: 1px solid #cfe3a4;
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+
+    .form-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      align-items: flex-end;
+    }
+    .field {
+      flex: 1 1 240px;
+    }
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    /* Mobile-friendly */
+    @media (max-width: 768px) {
+      .layout {
+        flex-direction: column;
+      }
+      .right {
+        flex: 1 1 auto;
+      }
+    }
+
+    /* Optional: make inputs nicer */
+    input[type="number"],
+    input[type="text"] {
+      padding: 6px 8px;
+      border: 1px solid #88b46b;
+      border-radius: 6px;
+    }
+  </style>
+
+  
+
+
+
+
+
   <script>
 
 window.onload = function() {
@@ -11,7 +73,12 @@ window.onload = function() {
   if (stay) {
     document.getElementById("savedReminder2").innerText = `Saved reminder time: ${stay}`;
   }
+  const userStay = localStorage.getItem("user_para")
+if (userStay) {
+    document.getElementById("UserSavedReminder").innerText = `Saved user note: ${userStay}`;
+  }
 };
+
 
     function scheduleReminder() {
       const startHour = parseInt(document.getElementById('startHour').value);
@@ -21,7 +88,7 @@ window.onload = function() {
       const randomHour = Math.floor(Math.random() * (endHour - startHour + 1)) + startHour;
       const randomMinute = Math.floor(Math.random() * 60);
       const randomSecond = Math.floor(Math.random() * 60);
-      const randomMonth = Math.floor(Math.random() * 13);
+      let randomMonth = Math.floor(Math.random() * 13);
       const randomDay = Math.floor(Math.random() * 32);
       const now = new Date();
       localStorage.setItem("reminder1", "Drink water at 2:30 PM");
@@ -32,11 +99,11 @@ window.onload = function() {
       reminderTime.setMinutes(randomMinute);
       reminderTime.setSeconds(randomSecond);
 
-      if (randomMonth === 0 ){
+      
+while (randomMonth < startMonth || randomMonth > endMonth) {
+  randomMonth = Math.floor(Math.random() * 13);}
 
-         randomMonth= randomMonth+1
-      };
-      //reminderTime.setMonth(randomMonth-1);
+      reminderTime.setMonth(randomMonth-1);
       reminderTime.setDate(randomDay);
       //reminderTime.setSeconds(0);
 
@@ -48,22 +115,33 @@ window.onload = function() {
       document.getElementById('rDay').innerText = `${randomDay.toLocaleString()}`;
 
       const delay = reminderTime - now;
-      if (delay > 0) {
-        setTimeout(() => {
-          alert("⏰ Time for your random reminder!");
-        }, delay);
+      
         
 
         
-        document.getElementById('status').innerText = `Reminder set for ${reminderTime.toLocaleTimeString()}`;
+        document.getElementById('status').innerText = `Scheduled Reminder set for ${reminderTime.toLocaleString()}`;//WILL THIS WORK WITHOUT TIME?
 
         //document.getElementById('status').innerText = `Reminder set for ${reminderTime.toLocaleTimeString()}`;
-      } //else {
+       //else {
         //document.getElementById('status').innerText = "Time already passed. Try again.";
       //}
     }
 
+function rightSide() {
 
+const userText = document.getElementById('rambling').value;
+localStorage.setItem("user_para", userText);
+let Notes = []
+
+const gotSomething = localStorage.getItem("user_para")
+if (gotSomething) {
+Notes[0] = `${gotSomething}`;;
+console.log(Notes);
+}
+
+
+
+}
 function scheduleRandomReminder() {
       const randomMonth = Math.floor(Math.random() * 13);
       const randomDay = Math.floor(Math.random() * 32);
@@ -82,14 +160,17 @@ rReminderTime.setMonth(randomMonth);
       rReminderTime.setSeconds(randomSecond);
 
 
-document.getElementById('randomDateTime').innerText = `Reminder set for ${rReminderTime.toLocaleString()}`;
+document.getElementById('randomDateTime').innerText = `Random Reminder set for ${rReminderTime.toLocaleString()}`;
       
     }
   </script>
 </head>
 <body style="background-color: lightgreen;">
+<div class="layout">
+  <div class="left">
   <h1>Random Reminder App</h1>
   <p id="savedReminder2"></p>
+
   <label>Start Hour (0–23): <input type="number" id="startHour" value="9"></label><br>
   <label>End Hour (0–23): <input type="number" id="endHour" value="17"></label><br>
 
@@ -106,6 +187,22 @@ document.getElementById('randomDateTime').innerText = `Reminder set for ${rRemin
   <p>This is random Month: <span id="rMonth">December</span> and this is random day: <span id="rDay">1st</span></p>
 <p id="randomDateTime"></p>
   
-  
+   </div>
+
+<aside class="right">
+
+<p id="UserSavedReminder"></p>
+<textarea id="rambling" name="comments" rows="4" cols="50" placeholder="Enter your comments"></textarea>
+<button onclick="rightSide()">Save note</button>
+
+<h2>Quick Notes</h2>
+
+
+
+
+
+
+</aside>
+</div>
 </body>
 </html>
