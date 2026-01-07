@@ -77,6 +77,21 @@ window.onload = function() {
 if (userStay) {
     document.getElementById("UserSavedReminder").innerText = `Saved user note: ${userStay}`;
   }
+const userStay2 = localStorage.getItem("user_para2")
+if (userStay2 ==null || userStay2 =="") {
+    
+journal.hidden = true;
+  }
+else{journal.hidden = false;
+document.getElementById("UNDETERMINED").innerText = `Second user note today: ${userStay2}`;}
+const userStay3 = localStorage.getItem("user_para3")
+if (userStay3 ==null || userStay3 =="") {
+    
+diary.hidden = true;
+  }
+else{diary.hidden = false;
+document.getElementById("whatnot").innerText = `Third user note today: ${userStay3}`;}
+
 };
 
 
@@ -127,21 +142,78 @@ while (randomMonth < startMonth || randomMonth > endMonth) {
       //}
     }
 
-function rightSide() {
 
-const userText = document.getElementById('rambling').value;
-localStorage.setItem("user_para", userText);
+
+function hasMeaningfulContent(value) {
+  // localStorage returns null if key is missing
+  if (value === null) return false;
+
+  // Guard against accidentally stored sentinel strings
+  if (value === 'null' || value === 'undefined') return false;
+
+  // Empty or whitespace-only is not meaningful
+  if (typeof value === 'string' && value.trim() === '') return false;
+
+  return true;
+}
+
+
+function rightSide() {
 let Notes = []
+const journal = document.getElementById('journal');
+const diary = document.getElementById('diary');
+
 
 const gotSomething = localStorage.getItem("user_para")
-if (gotSomething) {
+const somethingElse = localStorage.getItem("user_para2")
+const lastOne = localStorage.getItem("user_para3")
+
+
+if (hasMeaningfulContent(gotSomething))  Notes[0] = gotSomething;
+if (hasMeaningfulContent(somethingElse)) Notes[1] = somethingElse;
+
+if (gotSomething !=="" && somethingElse!=="") {
+
+console.log(Notes);
+journal.hidden = !hasMeaningfulContent(somethingElse);;
+diary.hidden = !hasMeaningfulContent(lastOne);;
+
+const userText = document.getElementById('rambling').value;
+if (userText !== ""){
+localStorage.setItem("user_para3", userText);
+}
+}
+else if (gotSomething!=="") {
 Notes[0] = `${gotSomething}`;;
 console.log(Notes);
+journal.hidden = !hasMeaningfulContent(somethingElse);;
+
+const userText = document.getElementById('rambling').value;
+if (userText !== ""){
+localStorage.setItem("user_para2", userText);
+}
+}
+else{
+
+const userText = document.getElementById('rambling').value;
+if (userText !== ""){
+localStorage.setItem("user_para", userText);
+}
 }
 
 
 
+
+
 }
+
+function reset(){
+localStorage.setItem("user_para", "");
+localStorage.setItem("user_para2", "");
+localStorage.setItem("user_para3", "");
+
+}
+
 function scheduleRandomReminder() {
       const randomMonth = Math.floor(Math.random() * 13);
       const randomDay = Math.floor(Math.random() * 32);
@@ -194,10 +266,25 @@ document.getElementById('randomDateTime').innerText = `Random Reminder set for $
 <p id="UserSavedReminder"></p>
 <textarea id="rambling" name="comments" rows="4" cols="50" placeholder="Enter your comments"></textarea>
 <button onclick="rightSide()">Save note</button>
+<button onclick="reset()">Reset</button>
 
 <h2>Quick Notes</h2>
 
+<div id="journal" hidden>Limited-time journal!
+<p id="UNDETERMINED"></p>
+<textarea id="speak" name="comments2" rows="4" cols="50" placeholder="Enter your comments"></textarea>
+<!-- <button onclick="rightSide()">Save note</button> -->
 
+
+</div>
+
+<div id="diary" hidden>Limited-time diary!
+<p id="whatnot"></p>
+<textarea id="speech" name="comments3" rows="4" cols="50" placeholder="Enter your comments"></textarea>
+<!-- <button onclick="rightSide()">Save note</button> -->
+
+
+</div>
 
 
 
