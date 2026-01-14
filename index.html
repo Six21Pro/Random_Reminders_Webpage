@@ -4,66 +4,10 @@
 
 
 <head>
+  
+<link rel="stylesheet" href="styles.css">
   <title>Random Reminder App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- ✅ Add this style block -->
-  <style>
-    .layout {
-      display: flex;
-      gap: 24px;
-      align-items: flex-start;
-    }
-    .left {
-      flex: 1 1 auto;
-      min-width: 300px;
-    }
-    .right {
-      flex: 0 0 320px;
-      background: #f9fff1;
-      border: 1px solid #cfe3a4;
-      border-radius: 8px;
-      padding: 12px 16px;
-    }
-
-    .form-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px 24px;
-      align-items: flex-end;
-    }
-    .field {
-      flex: 1 1 240px;
-    }
-    .buttons {
-      display: flex;
-      gap: 12px;
-      margin: 12px 0;
-    }
-
-    /* Mobile-friendly */
-    @media (max-width: 768px) {
-      .layout {
-        flex-direction: column;
-      }
-      .right {
-        flex: 1 1 auto;
-      }
-    }
-
-    /* Optional: make inputs nicer */
-    input[type="number"],
-    input[type="text"] {
-      padding: 6px 8px;
-      border: 1px solid #88b46b;
-      border-radius: 6px;
-    }
-  </style>
-
-  
-
-
-
 
 
   <script>
@@ -214,6 +158,19 @@ localStorage.setItem("user_para3", "");
 
 }
 
+function reset_1st(){
+localStorage.setItem("user_para", "");
+document.getElementById("savedReminder2").innerText = "";
+}
+function reset_2nd(){
+localStorage.setItem("user_para2", "");
+document.getElementById("UNDETERMINED").innerText = "";
+}
+function reset_3rd(){
+localStorage.setItem("user_para3", "");
+document.getElementById("whatnot").innerText = "";
+}
+
 function scheduleRandomReminder() {
       const randomMonth = Math.floor(Math.random() * 13);
       const randomDay = Math.floor(Math.random() * 32);
@@ -258,35 +215,49 @@ document.getElementById('randomDateTime').innerText = `Random Reminder set for $
   <p>This link will likely be leading you back to here. (It goes to my website, hosted on github)<a href="https://six21pro.github.io/gittpageremind/">Check Me!</a></p>
   <p>This is random Month: <span id="rMonth">December</span> and this is random day: <span id="rDay">1st</span></p>
 <p id="randomDateTime"></p>
+
+<h3>Links to websites that might alleviate boredom because why not</h3>
+<a href="https://nfl.com/">Football, Eagles|</a>
+<a href="https://nba.com/">Basketball, Sixers|</a>
+<a href="https://nhl.com/">Hockey, Flyers|</a>
+<a href="https://nytimes.com/games/wordle/">Wordle</a>
+
+
   
    </div>
 
-<aside class="right">
+<aside class= "middle">
+<p>Just testing out my spacing</p>
+<img src="images/galaxy.jpg" alt="A Distant Galaxy" style="width:200px;height:100px;margin-top: 75px;">
+</aside>
 
-<p id="UserSavedReminder"></p>
-<textarea id="rambling" name="comments" rows="4" cols="50" placeholder="Enter your comments"></textarea>
-<button onclick="rightSide()">Save note</button>
-<button onclick="reset()">Reset</button>
+<aside class="right">
 
 <h2>Quick Notes</h2>
 
+<p id="UserSavedReminder"></p>
+<textarea id="rambling" name="comments" rows="4" cols="50" placeholder="Enter your comments"></textarea>
+<button onclick="rightSide();location.reload()">Save note</button>
+<button onclick="reset()">Reset All to Null</button>
+<button onclick="reset_1st();location.reload()">Reset 1st Note</button>
+
+
+
 <div id="journal" hidden>Limited-time journal!
 <p id="UNDETERMINED"></p>
-<textarea id="speak" name="comments2" rows="4" cols="50" placeholder="Enter your comments"></textarea>
+<!--<textarea id="speak" name="comments2" rows="4" cols="50" placeholder="Enter your comments"></textarea>-->
 <!-- <button onclick="rightSide()">Save note</button> -->
-
+<button onclick="reset_2nd();location.reload()">Reset 2nd Note</button>
 
 </div>
 
 <div id="diary" hidden>Limited-time diary!
 <p id="whatnot"></p>
-<textarea id="speech" name="comments3" rows="4" cols="50" placeholder="Enter your comments"></textarea>
+<!--<textarea id="speech" name="comments3" rows="4" cols="50" placeholder="Enter your comments"></textarea>-->
 <!-- <button onclick="rightSide()">Save note</button> -->
-
+<button onclick="reset_3rd();location.reload()">Reset 3rd Note</button>
 
 </div>
-
-
 
 
 </aside>
